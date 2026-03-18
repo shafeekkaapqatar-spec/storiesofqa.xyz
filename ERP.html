@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AAP GROUP ERP</title>
+
+<style>
+body{
+  font-family:Arial;
+  background:#36454F;
+  margin:0;
+  padding:30px;
+color:BLACK;
+  font-weight:LATIN;
+}
+
+/* HEADER */
+h2{
+  text-align:center;
+  font-weight:ITALIAN	;
+  font-size:36px;
+  margin-bottom:5px;
+color:WHITE;
+
+}
+
+/* FLYING FLAG */
+.flag-container{
+  width:100%;
+  height:40px;
+  overflow:hidden;
+  position:relative;
+}
+.flag{
+  position:absolute;
+  width:120px;
+  animation:flyflag 15s linear infinite;
+}
+@keyframes flyflag{
+  0%{ left:-150px;}
+  100%{ left:100%;}
+}
+
+/* CLOCK */
+#clock{
+  text-align:center;
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:20px;
+color:WHITE;
+}
+
+/* MAIN LAYOUT */
+.main-container{
+  display:flex;
+  justify-content:center;
+  gap:40px;
+}
+
+/* LEFT PANEL */
+.left-panel{
+  width:260px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+/* CENTER PANEL */
+.center-panel{
+  display:grid;
+  grid-template-columns:repeat(4,250px);
+  gap:20px;
+}
+
+/* RIGHT PANEL */
+.right-panel{
+  width:280px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+/* PRAYER TIMES */
+#prayer-times {
+  background:#f5f5f5;
+  border-radius:8px;
+  padding:10px;
+  font-family:Arial, sans-serif;
+}
+#prayer-times table{
+  width:100%;
+  border-collapse:collapse;
+  text-align:center;
+}
+#prayer-times th, #prayer-times td{
+  padding:5px;
+  border-bottom:1px solid #ddd;
+}
+
+/* CALCULATOR */
+#calculator{
+  background:white;
+  border-radius:10px;
+  padding:15px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.2);
+}
+#calcDisplay{
+  width:100%;
+  padding:10px;
+  font-size:18px;
+  margin-bottom:10px;
+}
+.calc-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:5px;
+}
+.calc-grid button{
+  width:auto;
+  padding:12px;
+  background:#333;
+  font-size:16px;
+}
+.calc-grid button:hover{
+  background:black;
+}
+
+/* ERP BUTTONS */
+button{
+  width:250px;
+  padding:25px;
+  font-size:18px;
+  background:#8B0000;
+  color:white;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  box-shadow:0 4px 10px rgba(0,0,0,0.3);
+}
+button:hover{
+  background:#b30000;
+  transform:scale(1.05);
+}
+.icon{
+  display:block;
+  font-size:24px;
+  margin-bottom:10px;
+}
+
+/* GOOGLE TRANSLATE */
+#translateBox input{
+  width:100%;
+  padding:6px;
+}
+#translateBox button{
+  width:100%;
+  margin-top:5px;
+  padding:6px;
+  background:#4285F4;
+}
+
+/* MEMO BUTTON */
+.memo-btn{
+  width:100%;
+  padding:10px;
+  background:yellow;
+  color:black;
+  font-weight:bold;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+.memo-btn:hover{
+  background:#ffd633;
+}
+
+/* CALENDAR */
+#calendar{
+  background:white;
+  padding:10px;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+#calendar table{
+  width:100%;
+  border-collapse:collapse;
+}
+#calendar th,#calendar td{
+  text-align:center;
+  padding:5px;
+}
+.today{
+  background:red;
+  color:white;
+  border-radius:50%;
+}
+
+/* NOTIFICATION */
+#notificationBox{
+  background:#fff3cd;
+  padding:15px;
+  border-radius:10px;
+  font-size:14px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* SEARCH */
+#googleSearch input{
+  width:100%;
+  padding:6px;
+}
+#googleSearch button{
+  width:100%;
+  padding:6px;
+  margin-top:5px;
+  background:#4285F4;
+}
+</style>
+</head>
+
+<body>
+
+<h2>AL ANSARI GROUP OF COMPANIES</h2>
+
+<div class="flag-container">
+<img class="flag" src="https://upload.wikimedia.org/wikipedia/commons/6/65/Flag_of_Qatar.svg">
+</div>
+
+<h3 id="clock"></h3>
+
+<div class="main-container">
+
+<!-- LEFT PANEL -->
+<div class="left-panel">
+
+  <!-- DYNAMIC PRAYER TIMES ABOVE CALCULATOR -->
+  <div id="prayer-times">
+    <h3 style="text-align:center;margin-bottom:8px;">Qatar Prayer Times</h3>
+    <table>
+      <thead><tr><th>Prayer</th><th>Time</th></tr></thead>
+      <tbody id="prayer-table-body"></tbody>
+    </table>
+  </div>
+
+  <!-- CALCULATOR -->
+  <div id="calculator">
+    <input id="calcDisplay" type="text">
+    <div class="calc-grid">
+      <button onclick="calc('7')">7</button>
+      <button onclick="calc('8')">8</button>
+      <button onclick="calc('9')">9</button>
+      <button onclick="calc('/')">/</button>
+
+      <button onclick="calc('4')">4</button>
+      <button onclick="calc('5')">5</button>
+      <button onclick="calc('6')">6</button>
+      <button onclick="calc('*')">*</button>
+
+      <button onclick="calc('1')">1</button>
+      <button onclick="calc('2')">2</button>
+      <button onclick="calc('3')">3</button>
+      <button onclick="calc('-')">-</button>
+
+      <button onclick="calc('0')">0</button>
+      <button onclick="calc('.')">.</button>
+      <button onclick="calculate()">=</button>
+      <button onclick="calc('+')">+</button>
+
+      <button onclick="clearCalc()" style="grid-column:span 4;background:red;">C</button>
+    </div>
+  </div>
+
+  <!-- GOOGLE TRANSLATE -->
+  <div id="translateBox">
+    <form action="https://translate.google.com" target="_blank">
+      <input type="text" name="text" placeholder="Translate text">
+      <button type="submit">Translate</button>
+    </form>
+  </div>
+
+</div>
+
+<!-- CENTER PANEL -->
+<div class="center-panel">
+  <!-- ERP Buttons -->
+  <button onclick="window.open('https://fc-apps-02.family.qa:9001/forms/frmservlet?config=AAP1-NEW')"><span class="icon">🛒</span>AL ANSARI PARTNERS</button>
+  <button onclick="window.open('https://fc-apps-02.family.qa:9001/forms/frmservlet?config=AAP1-NEW')"><span class="icon">🛒</span>AROMA INTERNATIONAL</button>
+  <button onclick="window.open('https://fc-apps-02.family.qa:9001/forms/frmservlet?config=AAP1-NEW')"><span class="icon">🛒</span>FLAVOURS INTL</button>
+  <button onclick="window.open('https://fc-apps-02.family.qa:9001/forms/frmservlet?config=AAP1-NEW')"><span class="icon">🛒</span>AL NAADIJ TRADING</button>
+  <button onclick="window.open('https://fc-apps-02.family.qa:9001/forms/frmservlet?config=AAP-NEW')"><span class="icon">🛍️</span>RETAIL MART</button>
+  <button onclick="window.open('https://fc-apps-02.family.qa:9001/forms/frmservlet?config=AAP-NEW')"><span class="icon">🛍️</span>NEW INDIAN SUPERMARKET</button>
+  <button onclick="window.open('https://fc-apps-02.family.qa:9001/forms/frmservlet?config=MDS-NEW')"><span class="icon">🛍️</span>MEADOWS SUPERMARKET</button>
+  <button onclick="window.open('https://qss-03.family.qa:444')"><span class="icon">📊</span>BI TOOL</button>
+ <button onclick="window.open('https://erps-portal.aapqatar.com')"><span class="icon">📊</span>ERPS-Portal</button>
+<button onclick="window.open('https://erp-portal.aapqatar.com')"><span class="icon">📊</span>ERP-Portal</button>
+ <button onclick="window.open('https://portal.retailmart.qa')"><span class="icon">📊</span>RM-Item Portal</button>
+ <button onclick="window.open('https://portal.aapqatar.com')"><span class="icon">📊</span>AAP-Item Portal</button>
+  <button onclick="window.open('https://partner-app.talabat.com')"><span class="icon">🍔</span>TALABAT</button>
+  <button onclick="window.open('https://mail.aapqatar.com')"><span class="icon">📧</span>AAP MAIL</button>
+  <button onclick="window.open('https://webmail.rmart.qa')"><span class="icon">📧</span>RM MAIL</button>
+  <button onclick="window.open('https://webmail.nadij.qa')"><span class="icon">📧</span>NADIJ MAIL</button>
+  <button style="grid-column:1;" onclick="window.open('https://nadij.qa/ticket')">TICKETS CREATION</button>
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="right-panel">
+  <button class="memo-btn" onclick="window.open('https://docs.google.com/document/d/e/2PACX-1vTfzDXhW35T0g2BTB7hVoEutQK0nbFQopx3sOiME4g9WibLbHgVN5qnBxzgtGDwvavdYgxp_ihh2u7-/pub')">MEMO / Notification</button>
+
+  <!-- WINDOWS STYLE CALENDAR -->
+  <div id="calendar" style="margin-top:10px;">
+    <div id="calendar-controls" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+      <button style="background:#ccc;color:black;border:none;border-radius:4px;padding:2px 6px;font-weight:bold;" onclick="prevMonth()">&#8592;</button>
+      <select id="monthSelect" style="border-radius:4px;padding:2px;"></select>
+      <select id="yearSelect" style="border-radius:4px;padding:2px;"></select>
+      <button style="background:#ccc;color:black;border:none;border-radius:4px;padding:2px 6px;font-weight:bold;" onclick="nextMonth()">&#8594;</button>
+    </div>
+    <table id="calendarTable" style="width:100%;border-collapse:collapse;">
+      <thead><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- NOTIFICATION -->
+  <div id="notificationBox" style="margin-top:10px;">
+    <b>ERP Emergency Support</b>
+    <table style="width:100%;margin-top:10px">
+      <tr><td>Arsal</td><td align="right">66892984</td></tr>
+      <tr><td>Shafeek</td><td align="right">33812880</td></tr>
+      <tr><td>Nidheesh</td><td align="right">50835342</td></tr>
+      <tr><td>Suhail</td><td align="right">50835213</td></tr>
+      <tr><td>Sanoop</td><td align="right">50835212</td></tr>
+    </table>
+  </div>
+
+  <!-- SEARCH -->
+  <div id="googleSearch" style="margin-top:10px;">
+    <form action="https://www.chatgpt.com" target="_blank">
+      <input type="text" name="q" placeholder="AAP Search" style="width:100%;padding:6px;">
+      <button type="submit" style="width:100%;padding:6px;margin-top:5px;background:#4285F4;">Search</button>
+    </form>
+  </div>
+</div>
+
+</div>
+
+<script>
+/* CLOCK */
+function updateClock(){
+  let now=new Date();
+  document.getElementById("clock").innerHTML=now.toLocaleString();
+}
+setInterval(updateClock,1000);
+
+/* CALCULATOR */
+function calc(val){
+  let display = document.getElementById("calcDisplay");
+  display.value += val;
+}
+
+function calculate(){
+  let display = document.getElementById("calcDisplay");
+
+  try{
+    if(display.value.trim() !== ""){
+      display.value = Function('"use strict";return (' + display.value + ')')();
+    }
+  }
+  catch(err){
+    alert("Invalid Calculation");
+  }
+}
+
+function clearCalc(){
+  document.getElementById("calcDisplay").value = "";
+}
+/* KEYBOARD SUPPORT */
+document.addEventListener("keydown", function(e){
+
+  const display = document.getElementById("calcDisplay");
+
+  if("0123456789+-*/.".includes(e.key)){
+      display.value += e.key;
+  }
+
+  if(e.key === "Enter"){
+      e.preventDefault();
+      calculate();
+  }
+
+  if(e.key === "Backspace"){
+      display.value = display.value.slice(0,-1);
+  }
+
+  if(e.key === "Escape"){
+      display.value = "";
+  }
+
+});
+/* REQUEST NOTIFICATION PERMISSION */
+if("Notification" in window && Notification.permission!=="granted"){
+  Notification.requestPermission();
+}
+
+/* WINDOWS CALENDAR */
+const months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+let today=new Date();
+let month=today.getMonth();
+let year=today.getFullYear();
+
+function populateMonthYearSelectors(){
+  const monthSelect=document.getElementById("monthSelect");
+  const yearSelect=document.getElementById("yearSelect");
+  months.forEach((m,i)=>{ let opt=document.createElement("option"); opt.value=i; opt.text=m; monthSelect.add(opt); });
+  for(let y=year-100; y<=year+100; y++){ let opt=document.createElement("option"); opt.value=y; opt.text=y; yearSelect.add(opt); }
+  monthSelect.value=month;
+  yearSelect.value=year;
+  monthSelect.onchange=()=>{ month=parseInt(monthSelect.value); generateCalendar(); };
+  yearSelect.onchange=()=>{ year=parseInt(yearSelect.value); generateCalendar(); };
+}
+
+function generateCalendar(){
+  const table=document.querySelector("#calendarTable tbody");
+  table.innerHTML="";
+  const firstDay=new Date(year,month,1).getDay();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  let date=1;
+  for(let i=0;i<6;i++){
+    const row=document.createElement("tr");
+    for(let j=0;j<7;j++){
+      const cell=document.createElement("td");
+      cell.style.padding="5px"; cell.style.textAlign="center";
+      if(i===0 && j<firstDay) cell.innerHTML="";
+      else if(date>daysInMonth) cell.innerHTML="";
+      else{
+        cell.innerHTML=date;
+        if(date===today.getDate() && month===today.getMonth() && year===today.getFullYear()){
+          cell.style.background="red"; cell.style.color="white"; cell.style.borderRadius="50%";
+        }
+        date++;
+      }
+      row.appendChild(cell);
+    }
+    table.appendChild(row);
+  }
+}
+function prevMonth(){ month--; if(month<0){ month=11; year--; } generateCalendar(); document.getElementById("monthSelect").value=month; document.getElementById("yearSelect").value=year; }
+function nextMonth(){ month++; if(month>11){ month=0; year++; } generateCalendar(); document.getElementById("monthSelect").value=month; document.getElementById("yearSelect").value=year; }
+populateMonthYearSelectors();
+generateCalendar();
+
+/* FETCH QATAR PRAYER TIMES (ALADHAN API) */
+async function loadPrayerTimes(){
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = today.getMonth()+1;
+  const dd = today.getDate();
+
+  const url = `https://api.aladhan.com/v1/timings/${dd}-${mm}-${yyyy}?latitude=25.285447&longitude=51.531040&method=4`;
+  const res = await fetch(url);
+  const data = await res.json();
+  if(data.code===200){
+    const times = data.data.timings;
+    const prayerList = ["Fajr","Dhuhr","Asr","Maghrib","Isha"];
+    const tbody = document.getElementById("prayer-table-body");
+    tbody.innerHTML = "";
+    prayerList.forEach(p=>{
+      const t = times[p];
+      const row = `<tr><td>${p}</td><td>${t}</td></tr>`;
+      tbody.insertAdjacentHTML("beforeend",row);
+    });
+
+    // Save prayer times for notifications
+    window.prayerNotifyTimes = prayerList.map(p=> times[p]);
+  }
+}
+loadPrayerTimes();
+
+/* PRAYER NOTIFICATION SOUND & POPUP */
+function notifyPrayer(prayerName){
+  const audio = new Audio('https://www.soundjay.com/button/beep-07.wav');
+  audio.play();
+  if(Notification.permission==="granted"){
+    new Notification("Prayer Time", {body: `${prayerName} time has arrived!`});
+  }
+}
+
+setInterval(()=>{
+  if(!window.prayerNotifyTimes) return;
+  const now = new Date();
+  const cur = now.toTimeString().slice(0,5);
+  const prayerList = ["Fajr","Dhuhr","Asr","Maghrib","Isha"];
+  window.prayerNotifyTimes.forEach((time,index)=>{
+    if(time===cur){
+      notifyPrayer(prayerList[index]);
+    }
+  });
+},60000);
+</script>
+
+</body>
+</html>
